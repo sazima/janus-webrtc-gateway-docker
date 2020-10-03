@@ -26,8 +26,25 @@ RUN apt-get -y update && apt-get install -y \
     cmake \
     unzip \
     zip \
-    lsof wget vim sudo rsync cron mysql-client openssh-server supervisor locate gstreamer1.0-tools mplayer valgrind certbot python-certbot-apache dnsutils
+    lsof wget vim sudo rsync cron mysql-client openssh-server supervisor locate mplayer valgrind certbot python-certbot-apache dnsutils tcpdump gstreamer1.0-tools
 
+
+# RUN apt-get install -y libx264-dev libmatroska-dev libopus-dev libssl1.0-dev libtheora-dev libogg-dev python3-pip flex bison libsoup2.4-dev libjpeg-dev nasm libvpx-dev
+# RUN sudo pip3 install meson ninja
+# RUN git clone https://gitlab.freedesktop.org/gstreamer/gst-build
+# WORKDIR /gst-build
+# RUN git log -n 1 HEAD
+# RUN git checkout 1016bf23
+# RUN git log -n 1 HEAD
+# RUN mkdir builddir
+# # RUN meson builddir
+# RUN meson builddir
+# RUN ninja -C builddir update
+# RUN ninja install -C builddir
+# RUN ldconfig
+# RUN which gst-launch-1.0
+# RUN ldd /usr/local/bin/gst-launch-1.0
+# RUN gst-launch-1.0
 
 
 # FFmpeg build section
@@ -227,7 +244,7 @@ RUN SRTP="2.2.0" && apt-get remove -y libsrtp0-dev && wget https://github.com/ci
 
 
 
-# 8 March, 2019 1 commit 67807a17ce983a860804d7732aaf7d2fb56150ba
+# March, 2019 1 commit 67807a17ce983a860804d7732aaf7d2fb56150ba
 RUN apt-get remove -y libnice-dev libnice10 && \
     echo "deb http://deb.debian.org/debian  stretch-backports main" >> /etc/apt/sources.list && \
     apt-get  update && \
@@ -277,7 +294,7 @@ RUN make && make install
 
 
 RUN cd / && git clone https://github.com/meetecho/janus-gateway.git && cd /janus-gateway && \
-    git checkout refs/tags/v0.10.5 && \
+    git checkout refs/tags/v0.10.4 && \
     sh autogen.sh &&  \
     PKG_CONFIG_PATH="$HOME/ffmpeg_build/lib/pkgconfig" ./configure \
     --enable-post-processing \
@@ -304,7 +321,7 @@ COPY nginx.conf /usr/local/nginx/nginx.conf
 
 
 ENV NVM_VERSION v0.35.3
-ENV NODE_VERSION v10.16.0
+ENV NODE_VERSION v12.18.3
 ENV NVM_DIR /usr/local/nvm
 RUN mkdir $NVM_DIR
 RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/$NVM_VERSION/install.sh | bash
